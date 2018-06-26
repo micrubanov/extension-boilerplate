@@ -28,18 +28,12 @@ var renderMessage = (message) => {
 }
 
 var renderBookmark = (data) => {
-  var displayContainer = document.getElementById("display-container")
-  if(data) {
-    var tmpl = template(data);
-    displayContainer.innerHTML = tmpl;  
-  } else {
-    renderMessage("Sorry, could not extract this page's title and URL")
-  }
+  console.debug('check-state triggered', data);
 }
 
 ext.tabs.query({active: true, currentWindow: true}, function(tabs) {
   var activeTab = tabs[0];
-  chrome.tabs.sendMessage(activeTab.id, { action: 'process-page' }, renderBookmark);
+  chrome.tabs.sendMessage(activeTab.id, { action: 'check-state' }, renderBookmark);
 });
 
 popup.addEventListener("click", function(e) {
